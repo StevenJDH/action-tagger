@@ -1,0 +1,83 @@
+# This file is part of Action Tagger <https://github.com/StevenJDH/action-tagger>.
+# Copyright (C) 2024 Steven Jenkins De Haro.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: 'Action Tagger'
+description: 'Automatically sets semantic tags when releasing a new version of a GitHub action.'
+author: StevenJDH
+
+# See branding:
+# https://docs.github.com/actions/creating-actions/metadata-syntax-for-github-actions#branding
+branding:
+  icon: 'tag'
+  color: 'blue'
+
+inputs:
+  enable-dry-run:
+    description:
+      'Indicates whether or not to perform a dry run without pushing tags.'
+    required: false
+    default: 'false'
+  set-latest-tag:
+    description:
+      'Indicates whether or not to also set the latest tag.'
+    required: false
+    default: 'false'
+  github-token:
+    description:
+      'Overrides the default GitHub token used to authenticate against a repository for Git context.'
+    required: false
+    default: ${{ github.token }}
+
+outputs:
+  major_release:
+    description: 'The latest major release version.'
+    value: ${{ steps.action-tagger.outputs.major_release }}
+  minor_release:
+    description: 'The latest major and feature release version.'
+    value: ${{ steps.action-tagger.outputs.minor_release }}
+  full_release:
+    description: 'The full release version.'
+    value: ${{ steps.action-tagger.outputs.full_release }}
+  latest_tag:
+    description: 'Indicates whether of not the latest tag was set.'
+    value: ${{ steps.action-tagger.outputs.latest_tag }}
+
+runs:
+  using: 'composite'
+  steps:
+  - shell: bash
+    id: action-tagger
+    # Using bash explicitly avoids chmod +x requirement.
+    run: bash $GITHUB_ACTION_PATH/entrypoint.sh
+    env:
+      INPUT_ENABLE_DRY_RUN: ${{ inputs.enable-dry-run }}
+      INPUT_SET_LATEST_TAG: ${{ inputs.set-latest-tag }}
+      INPUT_GITHUB_TOKEN: ${{ inputs.github-token }}
+
+  - shell: bash
+    run: |
+      cat <<EOF >> "$GITHUB_STEP_SUMMARY"
+      ### Action Tagger [Dry Run: $INPUT_ENABLE_DRY_RUN] :rocket:
+      Below is a list of all the generated outputs for this run.
+
+      | Name          | Value   |
+      | ------------- | ------- |
+      | major_release | ${{ steps.action-tagger.outputs.major_release }} |
+      | minor_release | ${{ steps.action-tagger.outputs.minor_release }} |
+      | full_release  | ${{ steps.action-tagger.outputs.full_release }}  |
+      | latest_tag    | ${{ steps.action-tagger.outputs.latest_tag }}    |
+      EOF
+    env:
+      INPUT_ENABLE_DRY_RUN: ${{ inputs.enable-dry-run }}

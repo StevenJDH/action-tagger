@@ -1,0 +1,53 @@
+name: 'build'
+
+on:
+  push:
+    branches:
+    - main
+    paths-ignore:
+    - '*.md'
+    - '*.png'
+  pull_request:
+    branches:
+    - main
+    paths-ignore:
+    - '*.md'
+    - '*.png'
+    types: [opened, synchronize, reopened] # https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows#pull_request
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'The reason for running the workflow.'
+        required: true
+        default: 'Manual run'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        # Disabling shallow clone ensures all commits 
+        # and tags are available at checkout.
+        fetch-depth: 0
+
+    - name: Test Action Locally
+      id: action-tagger
+      # Not using xxx/xxx@main approach, because will load before everything.
+      uses: ./
+      with:
+        enable-dry-run: true
+        set-latest-tag: true
+        github-token: ${{ github.token }}
+
+    - name: Display Action Outputs
+      run: |
+        echo "Action Tagger Outputs:"
+        echo "- [major_release]: ${{ steps.action-tagger.outputs.major_release }}"
+        echo "- [minor_release]: ${{ steps.action-tagger.outputs.minor_release }}"
+        echo "- [full_release]: ${{ steps.action-tagger.outputs.full_release }}"
+        echo "- [latest_tag]: ${{ steps.action-tagger.outputs.latest_tag }}"
