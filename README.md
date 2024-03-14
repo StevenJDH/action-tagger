@@ -4,8 +4,10 @@
 [![macOS](https://img.shields.io/badge/macOS-000000?style=flat\&logo=macos\&logoColor=F0F0F0)](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on)
 [![Windows](https://img.shields.io/badge/Windows-0078D6?style=flat\&logo=windows\&logoColor=white)](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on)
 
-[![Public workflows that use this action.](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fused-by.vercel.app%2Fapi%2Fgithub-actions%2Fused-by%3Faction%3DStevenJDH%2Faction-tagger%26badge%3Dtrue)](https://github.com/search?o=desc&q=StevenJDH+action-tagger+language%3AYAML&s=&type=Code)
+[![build](https://github.com/StevenJDH/action-tagger/actions/workflows/bash-action-workflow.yml/badge.svg?branch=main)](https://github.com/StevenJDH/action-tagger/actions/workflows/bash-action-workflow.yml)
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/StevenJDH/action-tagger?include_prereleases)
+[![Public workflows that use this action.](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fused-by.vercel.app%2Fapi%2Fgithub-actions%2Fused-by%3Faction%3DStevenJDH%2Faction-tagger%26badge%3Dtrue)](https://github.com/search?o=desc&q=StevenJDH+action-tagger+language%3AYAML&s=&type=Code)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/a8ae369daa344226b27d34db9c1ae9ef)](https://app.codacy.com/gh/StevenJDH/action-tagger/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 ![Maintenance](https://img.shields.io/badge/yes-4FCA21?label=maintained&style=flat)
 ![GitHub](https://img.shields.io/github/license/StevenJDH/action-tagger)
 
@@ -18,11 +20,11 @@ Action Tagger automatically sets semantic tags when releasing a new version of a
 ## Inputs
 The following inputs are available:
 
-| Name                                                                     | Type     | Required | Default                         |  Description                                                        |
-|--------------------------------------------------------------------------|----------|:--------:|:-------------------------------:|---------------------------------------------------------------------|
-| <a name="enable-dry-run">[enable&#x2011;dry&#x2011;run](#enable-dry-run) | `string` | `false`  | `false`                         | Indicates whether or not to perform a dry run without pushing tags. |
-| <a name="set-latest-tag">[set&#x2011;latest&#x2011;tag](#set-latest-tag) | `string` | `false`  | `false`                         | Indicates whether or not to also set the latest tag.                |
-| <a name="github-token">[github&#x2011;token](#github-token)              | `string` | `false`  | <pre>${{&#xa0;github.token&#xa0;}}</pre> | Overrides the default GitHub token used to authenticate against a repository for Git context. |
+| Name                                                                         | Type     | Required | Default                         |  Description                                                        |
+|------------------------------------------------------------------------------|----------|:--------:|:-------------------------------:|---------------------------------------------------------------------|
+| <a name="enable-dry-run"></a>[enable&#x2011;dry&#x2011;run](#enable-dry-run) | `string` | `false`  | `false`                         | Indicates whether or not to perform a dry run without pushing tags. |
+| <a name="set-latest-tag"></a>[set&#x2011;latest&#x2011;tag](#set-latest-tag) | `string` | `false`  | `false`                         | Indicates whether or not to also set the latest tag.                |
+| <a name="github-token"></a>[github&#x2011;token](#github-token)              | `string` | `false`  | <pre>${{&#xa0;github.token&#xa0;}}</pre> | Overrides the default GitHub token used to authenticate against a repository for Git context. |
 
 > [!NOTE]  
 > Enabling dry-run will use a dummy version of v1.0.0 regardless of what version tags are available.
@@ -30,12 +32,12 @@ The following inputs are available:
 ## Outputs
 The following outputs are available:
 
-| Name                                                    | Type     | Example | Description                                      |
-|---------------------------------------------------------|----------|---------|--------------------------------------------------|
-| <a name="major_release">[major_release](#major_release) | `string` | v1      | The latest major release version.                |
-| <a name="minor_release">[minor_release](#minor_release) | `string` | v1.2    | The latest major and feature release version.    |
-| <a name="full_release">[full_release](#full_release)    | `string` | v1.2.3  | The full release version.                        |
-| <a name="latest_tag">[latest_tag](#latest_tag)          | `string` | false   | Indicates whether of not the latest tag was set. |
+| Name                                                        | Type     | Example | Description                                      |
+|-------------------------------------------------------------|----------|---------|--------------------------------------------------|
+| <a name="major_release"></a>[major_release](#major_release) | `string` | v1      | The latest major release version.                |
+| <a name="minor_release"></a>[minor_release](#minor_release) | `string` | v1.2    | The latest major and feature release version.    |
+| <a name="full_release"></a>[full_release](#full_release)    | `string` | v1.2.3  | The full release version.                        |
+| <a name="latest_tag"></a>[latest_tag](#latest_tag)          | `string` | false   | Indicates whether of not the latest tag was set. |
 
 ## Usage
 Below is a working example of a typical release workflow using Action Tagger. Token permissions have been scoped down to `contents:write` with support for pushing tags.
