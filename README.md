@@ -36,7 +36,7 @@ The following inputs are available:
 |------------------------------------------------------------------------------|----------|:--------:|:-------------------------------:|---------------------------------------------------------------------|
 | <a name="enable-dry-run"></a>[enable&#x2011;dry&#x2011;run](#enable-dry-run) | `string` | `false`  | `false`                         | Indicates whether or not to perform a dry run without pushing tags. |
 | <a name="set-latest-tag"></a>[set&#x2011;latest&#x2011;tag](#set-latest-tag) | `string` | `false`  | `false`                         | Indicates whether or not to also set the latest tag.                |
-| <a name="github-token"></a>[github&#x2011;token](#github-token)              | `string` | `false`  | <pre>${{&#xa0;github.token&#xa0;}}</pre> | Overrides the default GitHub token used to authenticate against a repository for Git context. |
+| <a name="github-token"></a>[github&#x2011;token](#github-token)              | `string` | `false`  | <code>&#xFEFF;$&#xFEFF;{{&#xa0;github.token&#xa0;}}</code> | Overrides the default GitHub token used to authenticate against a repository for Git context. |
 
 > [!NOTE]  
 > Enabling dry run will use a dummy version of v1.0.0 regardless of what version tags are available.

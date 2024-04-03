@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 # This file is part of Action Tagger <https://github.com/StevenJDH/action-tagger>.
 # Copyright (C) 2024 Steven Jenkins De Haro.
