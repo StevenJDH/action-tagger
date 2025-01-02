@@ -28,7 +28,7 @@ REMOTE_URL=https://$INPUT_GITHUB_TOKEN@$GITHUB_HOST/$GITHUB_REPOSITORY
 
 echo "Remote URL: $REMOTE_URL"
 
-echo "Processing release tag..."
+echo "Processing release version..."
 RELEASE_TAG=${INPUT_RELEASE_VERSION/refs\/tags\//}
 if ! [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     echo "::error::Tag '$RELEASE_TAG' is not prefixed with a 'v' and or using semantic versioning." >&2
