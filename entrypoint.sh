@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This file is part of Action Tagger <https://github.com/StevenJDH/action-tagger>.
-# Copyright (C) 2024 Steven Jenkins De Haro.
+# Copyright (C) 2024-2025 Steven Jenkins De Haro.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,11 +19,8 @@ set -euo pipefail
 
 if [[ "$INPUT_ENABLE_DRY_RUN" == "true" ]]; then
     echo "Preparing for dry-run..."
-    GITHUB_REF="refs/tags/v1.0.0"
+    INPUT_RELEASE_VERSION="refs/tags/v1.0.0"
     dry_run_flag="--dry-run"
-elif [[ "$GITHUB_REF" != "refs/tags/"* ]]; then
-    echo "::error::This should only run on push tags or on release." >&2
-    exit 1
 fi
 
 GITHUB_HOST=${GITHUB_SERVER_URL#https://}
@@ -32,7 +29,7 @@ REMOTE_URL=https://$INPUT_GITHUB_TOKEN@$GITHUB_HOST/$GITHUB_REPOSITORY
 echo "Remote URL: $REMOTE_URL"
 
 echo "Processing release tag..."
-RELEASE_TAG=${GITHUB_REF/refs\/tags\//}
+RELEASE_TAG=${INPUT_RELEASE_VERSION/refs\/tags\//}
 if ! [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     echo "::error::Tag '$RELEASE_TAG' is not prefixed with a 'v' and or using semantic versioning." >&2
     exit 1
