@@ -15,6 +15,7 @@ Action Tagger automatically sets semantic tags when releasing a new version of a
 
 * Automate the setting and shifting of first and second level semantic tags.
 * Optionally set a `latest` tag to use as an alternative to pointing to `main`.
+* Support for working in conjunction with other automated workflows like release generators.
 * Tag format is validated during a run to ensure correct conformity.
 * Support for running the action in a dry run mode without making actual changes.
 * Summary reports are generated after each run.
@@ -36,10 +37,11 @@ The following inputs are available:
 |------------------------------------------------------------------------------|----------|:--------:|:-------------------------------:|---------------------------------------------------------------------|
 | <a name="enable-dry-run"></a>[enable&#x2011;dry&#x2011;run](#enable-dry-run) | `string` | `false`  | `false`                         | Indicates whether or not to perform a dry run without pushing tags. |
 | <a name="set-latest-tag"></a>[set&#x2011;latest&#x2011;tag](#set-latest-tag) | `string` | `false`  | `false`                         | Indicates whether or not to also set the latest tag.                |
+| <a name="release-version"></a>[release&#x2011;version](#release-version)     | `string` | `false`  | <code>&#xFEFF;$&#xFEFF;{{&#xa0;github.ref&#xa0;}}</code> | Overrides the release version used for processing (e.g., `v1.0.0` or `refs/tags/v1.0.0`). |
 | <a name="github-token"></a>[github&#x2011;token](#github-token)              | `string` | `false`  | <code>&#xFEFF;$&#xFEFF;{{&#xa0;github.token&#xa0;}}</code> | Overrides the default GitHub token used to authenticate against a repository for Git context. |
 
 > [!NOTE]  
-> Enabling dry run will use a dummy version of v1.0.0 regardless of what version tags are available.
+> Enabling dry run will use a dummy version of v1.0.0 regardless of what version tags are available, or what override value is provided.
 
 ## Outputs
 The following outputs are available:
@@ -87,6 +89,9 @@ Implementing this action is relatively simple with just a few steps.
 
 2. When it's time to create a release, ensure that the tag being set is using the format `vX.X.X`. For example, `v1.2.3`. This will trigger the process and automate the rest.
 3. Done. Feel free to edit the release if a mistake was made, and Action Tagger will reflect the changes for this as well.
+
+> [!TIP]
+> If using a release generator, define this action in that workflow and override the version used for processing with the generated one. This is needed because the release event will not be triggered due to [safeguards](https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/triggering-a-workflow#triggering-a-workflow-from-a-workflow) in the default GitHub token for preventing recursive workflow runs. Alternatively, use a [PAT](https://github.com/settings/tokens/new?scopes=workflow) with either `workflow` or `repo` scoped permissions, as PATs do not have the same limitations, except for the need to manage their expiration.
 
 ## Disclaimer
 Action Tagger is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
