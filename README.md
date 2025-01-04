@@ -91,7 +91,7 @@ Implementing this action is relatively simple with just a few steps.
 3. Done. Feel free to edit the release if a mistake was made, and Action Tagger will reflect the changes for this as well.
 
 > [!TIP]
-> If using a release generator, define this action in that workflow and override the version used for processing with the generated one. This is needed because the release event will not be triggered due to [safeties](https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/triggering-a-workflow#triggering-a-workflow-from-a-workflow) in the default GitHub token for preventing recursive workflow runs. Alternatively, use a [PAT](https://github.com/settings/tokens/new?scopes=workflow) that has either `workflow` or `repo` scoped permissions.
+> If using a release generator, define this action in that workflow and override the version used for processing with the generated one. This is needed because the release event will not be triggered due to [safeguards](https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/triggering-a-workflow#triggering-a-workflow-from-a-workflow) in the default GitHub token for preventing recursive workflow runs. Alternatively, use a [PAT](https://github.com/settings/tokens/new?scopes=workflow) with either `workflow` or `repo` scoped permissions, as PATs do not have the same limitations, except for the need to manage their expiration.
 
 ## Disclaimer
 Action Tagger is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
