@@ -22,7 +22,7 @@ if [[ "$INPUT_ENABLE_DRY_RUN" == "true" ]]; then
     INPUT_RELEASE_VERSION="refs/tags/v1.0.0"
     dry_run_flag="--dry-run"
 elif [[ "$INPUT_RELEASE_VERSION" != "refs/tags/"* && "$INPUT_RELEASE_VERSION" == "refs/"*  ]]; then
-    echo "::error::This should only run on push tags or on release if release-version is not used." >&2
+    echo "::error::This should only run on push tags or on release if release-version is not set." >&2
     exit 1
 fi
 
